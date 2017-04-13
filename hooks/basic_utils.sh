@@ -98,3 +98,23 @@ is_x86() {
       ;;
   esac
 }
+
+install_from_aur() {
+    pwd="$(pwd)"
+    cd /tmp/deepin-installer-reborn/aur
+    wget "http://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz"
+    if [[ $? == 0 ]]; then
+        tar xvf $1.tar.gz
+        cd $1
+        source PKGBUILD
+        pacman -S --noconfirm --needed "${makedepends[@]}"
+        chown -R nobody .
+        sudo -u nobody makepkg
+        pacman -U --noconfirm *.pkg.tar.xz
+        cd ..
+        rm -rf "${1}*"
+    else
+        error "Failed to download package '$1' from aur"
+    fi
+    cd $pwd
+}

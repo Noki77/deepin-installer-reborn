@@ -5,36 +5,32 @@
 
 # Install package dependencies for development environment.
 
-sudo aptitude install \
+sudo pacman -Sy --needed \
     cmake \
-    g++ \
     gettext \
-    libattr1-dev \
-    libparted-dev \
-    libqt5x11extras5-dev \
-    libx11-dev \
-    libxext-dev \
-    libxrandr-dev \
-    libxss-dev \
-    libxtst-dev \
     pkg-config \
-    qt5-qmake \
-    qt5-default \
-    qtbase5-dev \
-    qttools5-dev-tools \
-    zlib1g-dev \
-    btrfs-progs \
     dosfstools \
+    jfstools \
     e2fsprogs \
-    jfsutils \
-    mtools \
-    ntfs-3g \
     os-prober \
     parted \
     squashfs-tools \
-    tshark \
     udev \
-    util-linux \
-    x11-xserver-utils \
     xfsprogs \
-    xkb-data
+    btrfs-progs \
+    mtools \
+    ntfs-3g \
+    util-linux \
+    wireshark-cli \
+    gcc \
+    libx11 \
+    libxext \
+    libxrandr \
+    libxss \
+    libxtst \
+    qt5-x11extras \
+    qt5-base \
+    qt5-tools \
+    zlib \
+    xorg-utils \
+    xkeyboard-config

@@ -10,10 +10,12 @@
 # So, always put this script to last step of in_chroot stage.
 
 if ! is_x86; then
-  # Only uninstall installer if not in x86 platform
-  apt-get -y purge deepin-installer-reborn
-  apt-get -y autoremove --purge
-  return 0
+    # Only uninstall installer if not in x86 platform
+    affected=("/usr/bin/deepin-installer-*" "/usr/share/applications/deepin-installer-*" "/usr/share/deepin-installer-reborn" "/usr/share/doc/deepin-installer-reborn" "/usr/share/icons/hicolor/scalable/apps/deepin-installer-*" "/usr/share/locale/*/LC_MESSAGES/deepin-installer-timezones.mo" "/usr/share/polkit-1" "/etc/live" "/lib/live" "/lib/systemd/system/systemd-timesyncd.service.d/disable-timesyncd-with-installer.conf")
+    for current in "${affected[@]}" do
+        rm -rf $current
+    done
+    return 0
 fi
 
 declare -a UNUSED_PKGS
@@ -66,12 +68,9 @@ detect_vbox || UNUSED_PKGS+=("virtualbox-guest-*")
 # Check package existence.
 declare -a EXISTING_UNUSED_PKGS
 for pkg in ${UNUSED_PKGS[@]}; do
-  dpkg -l | grep -q $pkg && EXISTING_UNUSED_PKGS+=($pkg)
+  pacman -Ssq $pkg && EXISTING_UNUSED_PKGS+=($pkg)
 done
 msg "Remove packages: ${EXISTING_UNUSED_PKGS[@]}"
-apt-get -y purge ${EXISTING_UNUSED_PKGS[@]}
-apt-get -y autoremove --purge
+pacman -Rdd --noconfirm ${EXISTING_UNUSED_PKGS[@]}
 
-# Returns 0 explicitly, because apt-get --purge might returns error if package
-# dependency does not fit.
 return 0

@@ -10,12 +10,12 @@ namespace installer {
 namespace {
 
 TEST(FileUtil, CopyFodlerTest) {
-  EXPECT_TRUE(CopyFolder("/etc/init.d", "/tmp/init.d", false));
-  EXPECT_TRUE(CopyFolder("/etc/apt", "/tmp/apt", false));
+  EXPECT_TRUE(CopyFolder("/etc/systemd/system", "/tmp/systemd/system", false));
+  EXPECT_TRUE(CopyFolder("/etc/pacman.d", "/tmp/pacman.d", false));
 }
 
 TEST(FileUtil, GetFileNameTest) {
-  EXPECT_EQ(GetFileName("/etc/apt/sources.list"), "sources.list");
+  EXPECT_EQ(GetFileName("/etc/pacman.d/mirrorlist"), "mirrorlist");
 }
 
 }  // namespace

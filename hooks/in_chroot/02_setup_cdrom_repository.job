@@ -3,13 +3,4 @@
 # Use of this source is governed by General Public License that can be found
 # in the LICENSE file.
 
-# add cdrom to sources.list
-[ ! -d /media/cdrom ] && warn_exit "/media/cdrom not exits. Skip."
-
-# commented source.list to let apt-get just using cdrom repo.
-sed -i 's/^/#/g' /etc/apt/sources.list
-# ident the cdrom first.
-apt-cdrom ident -d /media/cdrom -m && apt-cdrom add -d /media/cdrom -m 
-apt-get update
-
 return 0

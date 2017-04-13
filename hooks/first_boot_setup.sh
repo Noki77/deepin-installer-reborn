@@ -21,8 +21,10 @@ CONF_FILE=/etc/deepin-installer.conf
 
 # Purge installer package
 uninstall_installer() {
-  apt-get -y purge deepin-installer-reborn
-  apt-get -y autoremove --purge
+    affected=("/usr/bin/deepin-installer-*" "/usr/share/applications/deepin-installer-*" "/usr/share/deepin-installer-reborn" "/usr/share/doc/deepin-installer-reborn" "/usr/share/icons/hicolor/scalable/apps/deepin-installer-*" "/usr/share/locale/*/LC_MESSAGES/deepin-installer-timezones.mo" "/usr/share/polkit-1" "/etc/live" "/lib/live" "/lib/systemd/system/systemd-timesyncd.service.d/disable-timesyncd-with-installer.conf")
+    for current in "${affected[@]}" do
+        rm -rf $current
+    done
 }
 
 main() {

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Setting up dependencies for aur jobs
+
+pacman -S --needed --noconfirm base-devel wget
+
+TMP_PATH="/tmp/deepin-installer-reborn/aur"
+if [ ! -d "$TMP_PATH" ]; then
+    mkdir -p $TMP_PATH
+fi

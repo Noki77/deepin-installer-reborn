@@ -6,15 +6,14 @@
 # Install packages in oem/deb/ folder.
 # Uninstall packages defined in settings file.
 
-OEM_DEB="${OEM_DIR}/deb"
-if [ $(ls "${OEM_DEB}/*.deb" 2>/dev/null) ]; then
-  dpkg -i "${OEM_DEB}"/*.deb || warn "Failed to install oem deb packages"
-  # TODO(xushaohua): Call apt-get -f install
+OEM_ARCH="${OEM_DIR}/arch"
+if [ $(ls "${OEM_ARCH}/*.tar.gz" 2>/dev/null) ]; then
+  pacman -U --noconfirm "${OEM_ARCH}"/*.tar.gz || warn "Failed to install oem arch packages"
 fi
 
 UNINSTALLED_PKGS=$(installer_get "package_uninstalled_packages" | sed "s/;/ /g")
 if [ -n "${UNINSTALLED_PKGS}" ]; then
-  apt-get -y purge "${UNINSTALLED_PKGS}" || \
+  pacman -Rdd --noconfirm "${UNINSTALLED_PKGS}" || \
     warn_exit "Failed to install packages: ${UNINSTALLED_PKGS}"
 fi
 
